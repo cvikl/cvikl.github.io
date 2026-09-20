@@ -13,21 +13,24 @@
   <meta property="og:url" content="https://cvikl.github.io/" />
   <meta property="og:image" content="https://cvikl.github.io/assets/img/og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f2f0eb'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='38' fill='%231a1917'%3ETC%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Helvetica,Arial,sans-serif' font-weight='600' font-size='30' fill='%23fff'%3Etc%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f2f0eb;
-      --ink: #1a1917;
-      --muted: #6d6962;
-      --line: #d5d1c8;
-      --accent: #c8a96e;
-      --gutter: 48px;
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --bg: #ffffff;
+      --ink: #111111;
+      --mute: #6b6b6b;
+      --block: #e9e9e9;
+      --hero: #949494;
+      --faint: #efefef;
+      --lime: #d8ff3c;
+      --gutter: clamp(20px, 6vw, 96px);
+      --radius: 20px;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     html { scroll-behavior: smooth; }
@@ -35,661 +38,464 @@
     body {
       background: var(--bg);
       color: var(--ink);
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      min-height: 100vh;
+      font-family: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    ::selection { background: var(--accent); color: var(--ink); }
-
-    :focus-visible {
-      outline: 2px solid var(--ink);
-      outline-offset: 4px;
-    }
-
+    ::selection { background: var(--lime); color: var(--ink); }
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 4px; }
     img { display: block; max-width: 100%; height: auto; }
-
-    h1, h2, h3 { text-wrap: balance; }
-
-    /* grain overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 999;
-      opacity: 0.5;
-    }
-
-    /* shared mono voice */
-    .mono {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
+    a { color: inherit; }
+    h1, h2, h3 { font-weight: 400; text-wrap: balance; }
 
     /* NAV */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 100;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 28px var(--gutter);
-      color: #fff;
-      mix-blend-mode: difference;
-    }
-
-    nav .logo { opacity: 0.85; }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 36px;
+      gap: 4px;
+      padding: 6px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-radius: 14px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
     }
 
     nav a {
       text-decoration: none;
-      color: inherit;
-      opacity: 0.85;
-      padding: 8px 0;
-      transition: opacity 0.2s;
+      white-space: nowrap;
+      font-size: 15px;
+      padding: 9px 14px;
+      border-radius: 9px;
+      transition: background 0.2s;
     }
 
-    nav a:hover { opacity: 1; }
+    nav a:hover { background: var(--block); }
+    nav a.primary { background: var(--ink); color: #fff; }
+    nav a.primary:hover { background: #333; }
 
     /* HERO */
     .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .hero-left {
-      padding: 120px var(--gutter) 80px var(--gutter);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      opacity: 0;
-      animation: fadeUp 1s var(--ease-out) 0.2s forwards;
-    }
-
-    .hero-name {
-      font-size: clamp(56px, 7vw, 96px);
-      font-weight: 300;
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      margin-bottom: 32px;
-    }
-
-    .hero-name em {
-      font-style: italic;
-      color: var(--muted);
-    }
-
-    .hero-desc {
-      font-size: 22px;
-      font-weight: 300;
-      line-height: 1.6;
-      color: var(--muted);
-      max-width: 440px;
-      margin-bottom: 44px;
-    }
-
-    .hero-desc strong { font-weight: 400; color: var(--ink); }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px 28px;
-    }
-
-    .hero-meta .place {
-      color: var(--muted);
-      padding-right: 28px;
-      border-right: 1px solid var(--line);
-    }
-
-    .hero-meta a {
-      text-decoration: none;
-      color: var(--ink);
-      border-bottom: 1px solid var(--line);
-      padding: 6px 0 4px;
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .hero-meta a:hover { border-color: var(--ink); }
-
-    .hero-right {
       position: relative;
+      background: var(--hero);
+      height: min(92vh, 1000px);
+      min-height: 560px;
       overflow: hidden;
-      opacity: 0;
-      animation: fadeIn 1.2s var(--ease-out) 0.5s forwards;
     }
 
-    .hero-right img {
-      width: 100%;
-      aspect-ratio: 1059 / 1100;
-      object-fit: cover;
-      filter: grayscale(20%) contrast(1.05);
-    }
-
-    .hero-right::after {
-      content: '';
+    .hero img {
       position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to right, var(--bg) 0%, transparent 15%),
-        linear-gradient(to bottom, var(--bg) 0%, transparent 160px);
-    }
-
-    /* DIVIDER */
-    .divider {
-      height: 1px;
-      background: var(--line);
-      margin: 0 var(--gutter);
-    }
-
-    /* SECTION SHARED */
-    section {
-      padding: 100px var(--gutter);
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      width: auto;
+      max-width: none;
+      object-fit: cover;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 28%), linear-gradient(to bottom, transparent 0%, #000 22%);
+      -webkit-mask-composite: source-in;
+      mask-image: linear-gradient(to right, transparent 0%, #000 28%), linear-gradient(to bottom, transparent 0%, #000 22%);
+      mask-composite: intersect;
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+      animation: rise 1.4s var(--ease) 0.1s forwards;
     }
 
-    section.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    .section-title {
-      font-size: clamp(32px, 3vw, 40px);
-      font-weight: 300;
-      line-height: 1.1;
-      letter-spacing: -0.01em;
-      margin-bottom: 48px;
-    }
-
-    /* ABOUT */
-    #about {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 80px;
-      align-items: start;
-    }
-
-    .about-heading {
-      font-size: clamp(36px, 4vw, 56px);
-      font-weight: 300;
-      line-height: 1.15;
-      letter-spacing: -0.01em;
-    }
-
-    .about-heading em { font-style: italic; color: var(--muted); }
-
-    .about-figure {
-      margin-top: 48px;
-      max-width: 360px;
-    }
-
-    .about-figure img {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      filter: grayscale(20%) contrast(1.05);
-    }
-
-    .about-figure figcaption {
-      margin-top: 12px;
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .about-body { max-width: 580px; }
-
-    .about-body p {
-      font-size: 19px;
-      font-weight: 300;
-      line-height: 1.75;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-
-    .about-body p strong { font-weight: 400; color: var(--ink); }
-
-    .about-note {
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 1.6;
-      color: var(--muted);
-      padding: 16px 0 0;
-      border-top: 1px solid var(--line);
-      margin-top: 32px;
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      margin-top: 40px;
-      border-top: 1px solid var(--line);
-    }
-
-    .skill-item {
-      padding: 18px 0;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .skill-item:nth-child(odd) { padding-right: 24px; }
-    .skill-item:nth-child(even) { padding-left: 24px; border-left: 1px solid var(--line); }
-
-    .skill-name { color: var(--ink); }
-
-    .skill-detail {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--muted);
-    }
-
-    /* RECOGNITION */
-    .recognition-list {
-      list-style: none;
-      border-top: 1px solid var(--line);
-    }
-
-    .recognition-list li {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 8px 40px;
-      align-items: baseline;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .recognition-list .what {
-      font-size: 22px;
-      font-weight: 400;
-      line-height: 1.3;
-    }
-
-    .recognition-list .what span {
-      font-weight: 300;
-      color: var(--muted);
-    }
-
-    .recognition-list .where {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--muted);
+    .hero h1 {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -0.04em;
+      padding: 0 0 0 var(--gutter);
+      color: #fff;
+      font-size: clamp(88px, 17vw, 260px);
+      line-height: 0.86;
+      letter-spacing: -0.045em;
+      text-transform: lowercase;
       white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      animation: rise 1.2s var(--ease) 0.45s forwards;
     }
 
-    /* PROJECTS */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      border-top: 1px solid var(--line);
-    }
+    .hero h1 span { display: block; }
+    .hero h1 span:last-child { margin-left: -0.02em; }
 
-    .project-item {
-      display: flex;
-      flex-direction: column;
-      padding: 40px 32px 40px 0;
-      border-bottom: 1px solid var(--line);
-      border-right: 1px solid var(--line);
-    }
-
-    .project-item:nth-child(3n+2) { padding-left: 32px; }
-    .project-item:nth-child(3n) { border-right: none; padding-left: 32px; }
-
-    .project-title {
-      font-size: 26px;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      margin-bottom: 12px;
-      line-height: 1.2;
-    }
-
-    .project-meta {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--muted);
-      margin: -6px 0 12px;
-    }
-
-    .project-desc {
-      font-size: 18px;
-      font-weight: 300;
-      line-height: 1.65;
-      color: var(--muted);
-      margin-bottom: 20px;
-      max-width: 42ch;
-    }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border: 1px solid var(--line);
-      padding: 4px 8px;
-      border-radius: 2px;
-    }
-
-    .project-figure {
-      margin-top: auto;
-      padding-top: 28px;
-    }
-
-    .project-figure img {
-      width: 100%;
-      aspect-ratio: 3 / 2;
-      object-fit: cover;
-      object-position: center 58%;
-      filter: grayscale(20%) contrast(1.05);
-    }
-
-    /* CONTACT */
-    #contact {
-      text-align: center;
-      padding: 120px var(--gutter);
-    }
-
-    #contact .big-text {
-      font-size: clamp(40px, 6vw, 80px);
-      font-weight: 300;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 48px;
-    }
-
-    #contact .big-text em { font-style: italic; color: var(--muted); }
-
-    .contact-link {
-      display: inline-block;
-      text-decoration: none;
-      color: var(--ink);
-      border: 1px solid var(--ink);
-      padding: 16px 36px;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .contact-link:hover {
-      background: var(--ink);
-      color: var(--bg);
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--line);
-      padding: 28px var(--gutter);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    footer span { color: var(--muted); }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(40px); }
       to   { opacity: 1; transform: none; }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    /* INTRO */
+    .intro {
+      padding: 140px var(--gutter) 120px;
+      max-width: 1180px;
+    }
+
+    .intro p {
+      font-size: clamp(24px, 2.6vw, 36px);
+      line-height: 1.32;
+      letter-spacing: -0.015em;
+      max-width: 24ch;
+    }
+
+    .intro p + p { margin-top: 1.2em; }
+    .intro p span { color: var(--mute); }
+
+    .intro-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 32px;
+      margin-top: 56px;
+      font-size: 16px;
+      color: var(--mute);
+    }
+
+    .intro-meta a { text-decoration: none; color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+    .intro-meta a:hover { border-color: transparent; }
+
+    /* GIANT SECTION TITLES */
+    .giant {
+      position: relative;
+      overflow: hidden;
+      height: clamp(120px, 24vw, 380px);
+      margin: 40px 0 0;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .giant span {
+      position: absolute;
+      white-space: nowrap;
+      font-size: clamp(64px, 14vw, 220px);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--faint);
+      text-transform: lowercase;
+    }
+
+    .giant span:first-child { left: -0.02em; top: 0; }
+    .giant span:last-child { left: 12vw; top: 0.72em; }
+
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    /* PROJECTS */
+    .projects {
+      padding: 40px var(--gutter) 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 96px 48px;
+    }
+
+    .projects > *:nth-child(even) { margin-top: 140px; }
+
+    .project { text-decoration: none; display: block; }
+
+    .project .media {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--block);
+      margin-bottom: 20px;
+    }
+
+    .project .media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s var(--ease);
+    }
+
+    .project:hover .media img { transform: scale(1.03); }
+
+    .media.lime { background: var(--lime); }
+    .media.black { background: var(--ink); color: #fff; }
+    .media.grey { background: var(--block); }
+
+    .media .mark {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 28px;
+      font-size: clamp(48px, 7vw, 120px);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      text-transform: lowercase;
+    }
+
+    .media .mark small {
+      position: absolute;
+      top: 28px;
+      left: 28px;
+      font-size: 15px;
+      letter-spacing: 0;
+      text-transform: none;
+      line-height: 1.4;
+      max-width: 26ch;
+    }
+
+    .project h3 {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .project p {
+      font-size: 16px;
+      color: var(--mute);
+      margin-top: 6px;
+      max-width: 44ch;
+    }
+
+    /* RECOGNITION */
+    .recognition {
+      padding: 60px var(--gutter) 120px;
+    }
+
+    .recognition ul { list-style: none; border-top: 1px solid #ddd; }
+
+    .recognition li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 32px;
+      align-items: baseline;
+      padding: 22px 0;
+      border-bottom: 1px solid #ddd;
+      font-size: clamp(18px, 2vw, 26px);
+      letter-spacing: -0.015em;
+    }
+
+    .recognition li span:last-child { color: var(--mute); font-size: 16px; letter-spacing: 0; white-space: nowrap; }
+
+    /* ABOUT */
+    .about {
+      padding: 40px var(--gutter) 140px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      max-width: 1400px;
+    }
+
+    .about p {
+      font-size: 19px;
+      line-height: 1.5;
+      color: var(--mute);
+      max-width: 52ch;
+    }
+
+    .about p strong { color: var(--ink); font-weight: 500; }
+    .about p + p { margin-top: 1em; }
+
+    .about .photo {
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 3 / 2;
+      background: var(--block);
+    }
+
+    .about .photo img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* CONTACT */
+    .contact {
+      padding: 60px var(--gutter) 60px;
+    }
+
+    .contact h2 {
+      font-size: clamp(40px, 7vw, 112px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      max-width: 12ch;
+    }
+
+    .contact h2 span { color: var(--mute); }
+
+    .contact .email {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: clamp(20px, 3vw, 40px);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 4px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .contact .email:hover { color: var(--mute); border-color: var(--mute); }
+
+    .contact .links {
+      display: flex;
+      gap: 28px;
+      margin-top: 32px;
+      font-size: 16px;
+    }
+
+    .contact .links a { text-decoration: none; color: var(--mute); }
+    .contact .links a:hover { color: var(--ink); }
+
+    footer {
+      padding: 40px var(--gutter) 32px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 14px;
+      color: var(--mute);
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .hero-left, .hero-right { animation: none; opacity: 1; }
-      section { opacity: 1; transform: none; transition: none; }
+      .hero img, .hero h1 { animation: none; opacity: 1; }
+      .project .media img { transition: none; }
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 1024px) {
-      .projects-grid { grid-template-columns: 1fr 1fr; }
-      .project-item:nth-child(3n+2), .project-item:nth-child(3n) { padding-left: 0; }
-      .project-item:nth-child(odd) { border-right: 1px solid var(--line); padding-left: 0; }
-      .project-item:nth-child(even) { border-right: none; padding-left: 32px; }
+    @media (max-width: 900px) {
+      .projects { grid-template-columns: 1fr; gap: 56px; }
+      .projects > *:nth-child(even) { margin-top: 0; }
+      .about { grid-template-columns: 1fr; }
+      .about .photo { order: -1; }
     }
 
-    @media (max-width: 768px) {
-      :root { --gutter: 24px; }
-      nav { padding: 20px var(--gutter); }
-      nav ul { gap: 18px; }
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 100px var(--gutter) 60px; }
-      .hero-right img { aspect-ratio: 4 / 3; object-position: center 30%; }
-      .hero-right::after { background: linear-gradient(to bottom, var(--bg) 0%, transparent 20%); }
-      .hero-meta .place { width: 100%; border-right: none; padding-right: 0; }
-      section { padding: 64px var(--gutter); }
-      #about { grid-template-columns: 1fr; gap: 40px; }
-      .about-figure { max-width: none; }
-      .recognition-list li { grid-template-columns: 1fr; }
-      .recognition-list .where { white-space: normal; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .project-item, .project-item:nth-child(odd), .project-item:nth-child(even) { border-right: none; padding: 28px 0 32px; }
-      .project-item:last-child { border-bottom: none; }
-      footer { flex-direction: column; gap: 12px; text-align: center; }
+    @media (max-width: 640px) {
+      nav a { font-size: 14px; padding: 8px 11px; }
+      .hero { height: 78vh; min-height: 480px; }
+      .hero img { right: -14%; height: 92%; }
+      .hero h1 { font-size: 20vw; bottom: -0.04em; }
+      .intro { padding: 96px var(--gutter) 80px; }
+      .intro p { max-width: none; }
+      .giant span:last-child { left: 8vw; }
+      .recognition li { grid-template-columns: 1fr; }
+      .recognition li span:last-child { white-space: normal; }
+      .media .mark { padding: 20px; }
+      .media .mark small { top: 20px; left: 20px; }
+      footer { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <span class="logo mono">Timotej Cvikl</span>
-    <ul>
-      <li><a class="mono" href="#about">About</a></li>
-      <li><a class="mono" href="#work">Work</a></li>
-      <li><a class="mono" href="#contact">Contact</a></li>
-    </ul>
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a class="primary" href="#contact">Let's connect</a>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero" style="opacity:1;transform:none;padding:0;">
-    <div class="hero-left">
-      <h1 class="hero-name">Timotej<br><em>Cvikl</em></h1>
-      <p class="hero-desc"><strong>Co-founder of Legis Labs.</strong> Building AI that people can trust with decisions that matter.</p>
-      <div class="hero-meta mono">
-        <span class="place">Cambridge, United Kingdom</span>
-        <a href="mailto:timotej.cvikl@gmail.com">Email</a>
-        <a href="https://www.linkedin.com/in/timotej-cvikl/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://github.com/cvikl" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </div>
-    <div class="hero-right">
-      <img src="assets/img/profile.jpg" alt="Timotej Cvikl" width="1059" height="1100" fetchpriority="high" />
+  <header class="hero">
+    <img src="assets/img/portrait.jpg" alt="Timotej Cvikl, black and white portrait" width="1400" height="1677" fetchpriority="high" />
+    <h1><span>timotej</span><span>cvikl</span></h1>
+  </header>
+
+  <section class="intro" id="about">
+    <p>Co-founder of Legis Labs. Building AI that people can trust with decisions that matter.</p>
+    <p><span>We check what a model wrote against the sources it used, line by line. Today that runs live on UK immigration case preparation in Cambridge. Before this I built software for factories in Slovenia and started a founders community at my university.</span></p>
+    <div class="intro-meta">
+      <span>Cambridge, United Kingdom</span>
+      <a href="mailto:timotej.cvikl@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/timotej-cvikl/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/cvikl" target="_blank" rel="noopener">GitHub</a>
     </div>
   </section>
 
-  <div class="divider"></div>
+  <div class="giant" aria-hidden="true"><span>recent projects</span><span>recent projects</span></div>
+  <h2 class="sr" id="work">Recent projects</h2>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div>
-      <h2 class="about-heading">Builder,<br><em>researcher,</em><br>founder.</h2>
-      <figure class="about-figure">
-        <img src="assets/img/accelerate-cambridge.jpg" alt="Timotej Cvikl with the Legis Labs team at Cambridge Judge Business School" width="480" height="640" loading="lazy" />
-        <figcaption>Accelerate Cambridge, Cohort 40. Cambridge Judge Business School, 2026.</figcaption>
-      </figure>
-    </div>
-    <div class="about-body">
-      <p>I am the co-founder of <strong>Legis Labs</strong>. We build a verification engine for regulated work. It checks AI output against its sources, line by line, so that people can trust what the model produced. We are in Accelerate Cambridge, and the engine is live on UK immigration case preparation.</p>
-      <p>Before that I co-founded <strong>Marcelino Technologies</strong> in Celje and founded <strong>FRI Founders</strong>, the startup community at the Faculty of Computer and Information Science (FRI) in Ljubljana. I now advise both.</p>
-      <p>I study Computer Science on the AI track at the University of Ljubljana, with an exchange semester at the University of Oklahoma.</p>
-      <p>Outside of code, I take the gym seriously because consistency there carries over everywhere else.</p>
-      <p class="about-note">Marcelino Technologies: co-founded 2023, AI and SaaS for 10+ industrial clients (EasyTask, iDrive). Now advisor and shareholder.</p>
-      <div class="skills-grid">
-        <div class="skill-item">
-          <span class="skill-name mono">AI Verification</span>
-          <span class="skill-detail">LLMs, dependency graphs, source citation</span>
-        </div>
-        <div class="skill-item">
-          <span class="skill-name mono">Engineering</span>
-          <span class="skill-detail">Python, full-stack, APIs, SaaS</span>
-        </div>
-        <div class="skill-item">
-          <span class="skill-name mono">Product</span>
-          <span class="skill-detail">0 to 1, regulated domains</span>
-        </div>
-        <div class="skill-item">
-          <span class="skill-name mono">Research</span>
-          <span class="skill-detail">NLP, computer vision</span>
-        </div>
+  <section class="projects">
+
+    <article class="project">
+      <div class="media">
+        <img src="assets/img/accelerate-cambridge.jpg" alt="The Legis Labs team at Cambridge Judge Business School" width="480" height="640" loading="lazy" />
       </div>
-    </div>
+      <h3>Legis Labs</h3>
+      <p>Verification engine for regulated work. Live on UK immigration case preparation with three signed law-firm LOIs. Accelerate Cambridge, 2026.</p>
+    </article>
+
+    <article class="project">
+      <div class="media lime">
+        <div class="mark"><small>CDIR Global Agentic Regulator Competition, 2026</small>know your agent</div>
+      </div>
+      <h3>Agent Passport</h3>
+      <p>A verification protocol for autonomous agents in financial services. Finalist, and winner of the Vouch Finance Prize.</p>
+    </article>
+
+    <article class="project">
+      <div class="media">
+        <img src="assets/img/hack-the-law.jpg" alt="Timotej Cvikl and team at Hack the Law, Cambridge Judge Business School" width="1600" height="1067" loading="lazy" />
+      </div>
+      <h3>Certum</h3>
+      <p>Dependency-graph review of AI-drafted legal documents. Winner of the Luminance Challenge at Hack the Law, University of Cambridge, 2026.</p>
+    </article>
+
+    <article class="project">
+      <div class="media black">
+        <div class="mark"><small>Adeline Health x AI Hackathon, Google HQ London, 2026</small>clinical audit</div>
+      </div>
+      <h3>Clinical audit harness</h3>
+      <p>A MedGemma-based audit harness for clinical documents, built in 24 hours with Alexandra Tran and Davod Shah. Popular Vote winner.</p>
+    </article>
+
+    <article class="project">
+      <div class="media grey">
+        <div class="mark"><small>AI x Law Hackathon, Ljubljana, 2026</small>prima facie</div>
+      </div>
+      <h3>Prima Facie</h3>
+      <p>An LLM pipeline for legal intake and due diligence, built with law firm Jadek &amp; Pensa in 24 hours. 1st place.</p>
+    </article>
+
+    <article class="project">
+      <div class="media">
+        <img src="assets/img/fri-founders.jpg" alt="The FRI Founders team inside the Faculty of Computer and Information Science in Ljubljana" width="480" height="640" loading="lazy" />
+      </div>
+      <h3>FRI Founders</h3>
+      <p>The startup community at FRI, which I founded and grew to 120+ members. Runs the Founders Talk series and a podcast. University of Ljubljana, 2026.</p>
+    </article>
+
   </section>
 
-  <!-- RECOGNITION -->
-  <section id="recognition">
-    <h2 class="section-title">Recognition</h2>
-    <ul class="recognition-list">
-      <li>
-        <span class="what">Accelerate Cambridge, Cohort 40</span>
-        <span class="where">Cambridge Judge Business School, 2026</span>
-      </li>
-      <li>
-        <span class="what">Winner, Luminance Challenge <span>at Hack the Law</span></span>
-        <span class="where">University of Cambridge, 2026</span>
-      </li>
-      <li>
-        <span class="what">Vouch Finance Prize <span>at the CDIR Global Agentic Regulator Competition</span></span>
-        <span class="where">Cambridge, 2026</span>
-      </li>
-      <li>
-        <span class="what">Popular Vote winner <span>at the Adeline Health x AI Hackathon</span></span>
-        <span class="where">Google HQ London, 2026</span>
-      </li>
-      <li>
-        <span class="what">1st place, AI x Law Hackathon</span>
-        <span class="where">Ljubljana, 2026</span>
-      </li>
-      <li>
-        <span class="what">Finalist, Falling Walls Lab <span>South West Austria</span></span>
-        <span class="where">Villach, 2026</span>
-      </li>
-      <li>
-        <span class="what">Paper accepted <span>at ERK 2026</span></span>
-        <span class="where">Portorož, 2026</span>
-      </li>
+  <div class="giant" aria-hidden="true"><span>recognition</span><span>recognition</span></div>
+  <h2 class="sr">Recognition</h2>
+
+  <section class="recognition">
+    <ul>
+      <li><span>Accelerate Cambridge, Cohort 40</span><span>Cambridge Judge Business School, 2026</span></li>
+      <li><span>Winner, Luminance Challenge at Hack the Law</span><span>University of Cambridge, 2026</span></li>
+      <li><span>Vouch Finance Prize at the CDIR Global Agentic Regulator Competition</span><span>Cambridge, 2026</span></li>
+      <li><span>Popular Vote winner, Adeline Health x AI Hackathon</span><span>Google HQ London, 2026</span></li>
+      <li><span>1st place, AI x Law Hackathon</span><span>Ljubljana, 2026</span></li>
+      <li><span>Finalist, Falling Walls Lab South West Austria</span><span>Villach, 2026</span></li>
+      <li><span>Paper accepted at ERK 2026</span><span>Portorož, 2026</span></li>
     </ul>
   </section>
 
-  <!-- SELECTED WORK -->
-  <section id="work">
-    <h2 class="section-title">Selected work</h2>
-    <div class="projects-grid">
-
-      <article class="project-item">
-        <h3 class="project-title">Legis Labs</h3>
-        <p class="project-meta">Accelerate Cambridge, 2026</p>
-        <p class="project-desc">Live on UK immigration case preparation, with three signed law-firm LOIs. Every claim in a draft is traced to its source over a dependency graph, so a caseworker sees what was checked and what was not.</p>
-        <div class="project-tags">
-          <span class="tag">Verification</span>
-          <span class="tag">LLMs</span>
-          <span class="tag">Legal</span>
-        </div>
-      </article>
-
-      <article class="project-item">
-        <h3 class="project-title">Agent Passport</h3>
-        <p class="project-meta">CDIR Global Agentic Regulator Competition, 2026</p>
-        <p class="project-desc">A Know-Your-Agent verification protocol for autonomous agents in financial services. Finalist, and winner of the Vouch Finance Prize.</p>
-        <div class="project-tags">
-          <span class="tag">Agents</span>
-          <span class="tag">Financial services</span>
-          <span class="tag">Protocol</span>
-        </div>
-      </article>
-
-      <article class="project-item">
-        <h3 class="project-title">Clinical audit harness</h3>
-        <p class="project-meta">Adeline Health x AI Hackathon, Google HQ London, 2026</p>
-        <p class="project-desc">A MedGemma-based audit harness for clinical documents, built in 24 hours with Alexandra Tran and Davod Shah. Popular Vote winner.</p>
-        <div class="project-tags">
-          <span class="tag">MedGemma</span>
-          <span class="tag">Healthcare</span>
-          <span class="tag">Audit</span>
-        </div>
-      </article>
-
-      <article class="project-item">
-        <h3 class="project-title">Certum</h3>
-        <p class="project-meta">Hack the Law, University of Cambridge, 2026</p>
-        <p class="project-desc">Dependency-graph review of AI-drafted legal documents. Winner of the Luminance Challenge.</p>
-        <div class="project-tags">
-          <span class="tag">Legal tech</span>
-          <span class="tag">Dependency graphs</span>
-          <span class="tag">LLMs</span>
-        </div>
-      </article>
-
-      <article class="project-item">
-        <h3 class="project-title">Prima Facie</h3>
-        <p class="project-meta">AI x Law Hackathon, Ljubljana, 2026</p>
-        <p class="project-desc">An LLM pipeline for legal intake and due diligence, built with law firm Jadek &amp; Pensa in 24 hours. 1st place.</p>
-        <div class="project-tags">
-          <span class="tag">LLMs</span>
-          <span class="tag">Legal intake</span>
-          <span class="tag">Due diligence</span>
-        </div>
-      </article>
-
-      <article class="project-item">
-        <h3 class="project-title">FRI Founders</h3>
-        <p class="project-meta">University of Ljubljana, 2026</p>
-        <p class="project-desc">The startup community at FRI, which I founded and grew to 120+ members. Runs the Founders Talk series and a podcast with Slovenian founders and investors.</p>
-        <div class="project-tags">
-          <span class="tag">Community</span>
-          <span class="tag">Events</span>
-          <span class="tag">Podcast</span>
-        </div>
-        <figure class="project-figure">
-          <img src="assets/img/fri-founders.jpg" alt="The FRI Founders team on a walkway inside the Faculty of Computer and Information Science in Ljubljana" width="480" height="640" loading="lazy" />
-        </figure>
-      </article>
-
+  <section class="about">
+    <div>
+      <p><strong>Legis Labs</strong> builds a verification engine for regulated work. It checks AI output against its sources, line by line, over a dependency graph, so that people can trust what the model produced. We are in Accelerate Cambridge, Cohort 40, at Cambridge Judge Business School.</p>
+      <p>In 2023 I co-founded <strong>Marcelino Technologies</strong>, which builds AI and SaaS for more than ten industrial clients, including EasyTask and iDrive. I founded <strong>FRI Founders</strong>, the startup community at the Faculty of Computer and Information Science in Ljubljana. I now advise both and remain a shareholder in Marcelino.</p>
+      <p>I study Computer Science on the AI track at the University of Ljubljana, with an exchange semester at the University of Oklahoma. My work spans AI verification, engineering, product in regulated domains, and research in NLP and computer vision.</p>
+      <p>Outside of code, I take the gym seriously because consistency there carries over everywhere else.</p>
+    </div>
+    <div class="photo">
+      <img src="assets/img/at-work.jpg" alt="Timotej Cvikl working on a laptop at Hack the Law" width="1600" height="1067" loading="lazy" />
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <p class="big-text">Let's build<br><em>something.</em></p>
-    <a class="contact-link mono" href="mailto:timotej.cvikl@gmail.com">Get in touch</a>
+  <section class="contact" id="contact">
+    <h2>Working on something that has to be right? <span>Tell me.</span></h2>
+    <a class="email" href="mailto:timotej.cvikl@gmail.com">timotej.cvikl@gmail.com</a>
+    <div class="links">
+      <a href="https://www.linkedin.com/in/timotej-cvikl/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/cvikl" target="_blank" rel="noopener">GitHub</a>
+    </div>
   </section>
 
   <footer>
-    <span class="mono">Timotej Cvikl — Cambridge · Ljubljana</span>
-    <span class="mono">&copy; 2026</span>
+    <span>Timotej Cvikl — Cambridge · Ljubljana</span>
+    <span>&copy; 2026</span>
   </footer>
-
-  <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('section:not(.hero)').forEach(s => observer.observe(s));
-  </script>
 
 </body>
 </html>
