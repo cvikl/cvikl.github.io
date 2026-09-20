@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Timotej Cvikl</title>
+  <title>Timotej Cvikl, co-founder of Legis Labs</title>
   <meta name="google-site-verification" content="wTxKSipsTMafXHfj88AyUocytqQ2Yp1leyQykoziNRM" />
-  <meta name="description" content="Timotej Cvikl - CS student at FRI Ljubljana, ML researcher, and co-owner of Marcelino d.o.o. Building at the intersection of machine learning, markets, and ideas." />
+  <meta name="description" content="Timotej Cvikl, co-founder of Legis Labs. Building AI that people can trust with decisions that matter. Cambridge and Ljubljana." />
+  <link rel="canonical" href="https://cvikl.github.io/" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Timotej Cvikl, co-founder of Legis Labs" />
+  <meta property="og:description" content="Building AI that people can trust with decisions that matter. Cambridge and Ljubljana." />
+  <meta property="og:url" content="https://cvikl.github.io/" />
+  <meta property="og:image" content="https://cvikl.github.io/assets/img/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f2f0eb'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='38' fill='%231a1917'%3ETC%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -14,9 +23,11 @@
     :root {
       --bg: #f2f0eb;
       --ink: #1a1917;
-      --muted: #7a7670;
+      --muted: #6d6962;
       --line: #d5d1c8;
       --accent: #c8a96e;
+      --gutter: 48px;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     html { scroll-behavior: smooth; }
@@ -29,6 +40,17 @@
       overflow-x: hidden;
     }
 
+    ::selection { background: var(--accent); color: var(--ink); }
+
+    :focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 4px;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+
+    h1, h2, h3 { text-wrap: balance; }
+
     /* grain overlay */
     body::before {
       content: '';
@@ -40,6 +62,14 @@
       opacity: 0.5;
     }
 
+    /* shared mono voice */
+    .mono {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
     /* NAV */
     nav {
       position: fixed;
@@ -48,17 +78,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 28px 48px;
-      mix-blend-mode: multiply;
+      padding: 28px var(--gutter);
+      color: #fff;
+      mix-blend-mode: difference;
     }
 
-    nav .logo {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+    nav .logo { opacity: 0.85; }
 
     nav ul {
       list-style: none;
@@ -67,40 +92,28 @@
     }
 
     nav a {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
       text-decoration: none;
-      color: var(--muted);
-      transition: color 0.2s;
+      color: inherit;
+      opacity: 0.85;
+      padding: 8px 0;
+      transition: opacity 0.2s;
     }
 
-    nav a:hover { color: var(--ink); }
+    nav a:hover { opacity: 1; }
 
     /* HERO */
     .hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      align-items: start;
     }
 
     .hero-left {
-      padding: 140px 48px 80px 48px;
+      padding: 120px var(--gutter) 80px var(--gutter);
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: center;
       opacity: 0;
-      animation: fadeUp 1s ease 0.2s forwards;
-    }
-
-    .hero-eyebrow {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 24px;
+      animation: fadeUp 1s var(--ease-out) 0.2s forwards;
     }
 
     .hero-name {
@@ -117,44 +130,50 @@
     }
 
     .hero-desc {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 300;
-      line-height: 1.7;
+      line-height: 1.6;
       color: var(--muted);
-      max-width: 420px;
-      margin-bottom: 48px;
+      max-width: 440px;
+      margin-bottom: 44px;
     }
 
-    .hero-links {
+    .hero-desc strong { font-weight: 400; color: var(--ink); }
+
+    .hero-meta {
       display: flex;
-      gap: 28px;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 28px;
     }
 
-    .hero-links a {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+    .hero-meta .place {
+      color: var(--muted);
+      padding-right: 28px;
+      border-right: 1px solid var(--line);
+    }
+
+    .hero-meta a {
       text-decoration: none;
       color: var(--ink);
       border-bottom: 1px solid var(--line);
-      padding-bottom: 4px;
+      padding: 6px 0 4px;
       transition: border-color 0.2s, color 0.2s;
     }
 
-    .hero-links a:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-meta a:hover { border-color: var(--ink); }
 
     .hero-right {
       position: relative;
       overflow: hidden;
       opacity: 0;
-      animation: fadeIn 1.2s ease 0.5s forwards;
+      animation: fadeIn 1.2s var(--ease-out) 0.5s forwards;
     }
 
     .hero-right img {
       width: 100%;
-      height: auto;
-      display: block;
+      aspect-ratio: 1059 / 1100;
+      object-fit: cover;
       filter: grayscale(20%) contrast(1.05);
     }
 
@@ -162,22 +181,24 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to right, var(--bg) 0%, transparent 15%);
+      background:
+        linear-gradient(to right, var(--bg) 0%, transparent 15%),
+        linear-gradient(to bottom, var(--bg) 0%, transparent 160px);
     }
 
     /* DIVIDER */
     .divider {
       height: 1px;
       background: var(--line);
-      margin: 0 48px;
+      margin: 0 var(--gutter);
     }
 
     /* SECTION SHARED */
     section {
-      padding: 100px 48px;
+      padding: 100px var(--gutter);
       opacity: 0;
       transform: translateY(24px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
     }
 
     section.visible {
@@ -185,24 +206,12 @@
       transform: none;
     }
 
-    .section-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
+    .section-title {
+      font-size: clamp(32px, 3vw, 40px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
       margin-bottom: 48px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--line);
-      max-width: 80px;
     }
 
     /* ABOUT */
@@ -222,12 +231,46 @@
 
     .about-heading em { font-style: italic; color: var(--muted); }
 
+    .about-figure {
+      margin-top: 48px;
+      max-width: 360px;
+    }
+
+    .about-figure img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      filter: grayscale(20%) contrast(1.05);
+    }
+
+    .about-figure figcaption {
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .about-body { max-width: 580px; }
+
     .about-body p {
       font-size: 19px;
       font-weight: 300;
       line-height: 1.75;
       color: var(--muted);
       margin-bottom: 20px;
+    }
+
+    .about-body p strong { font-weight: 400; color: var(--ink); }
+
+    .about-note {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--muted);
+      padding: 16px 0 0;
+      border-top: 1px solid var(--line);
+      margin-top: 32px;
     }
 
     .skills-grid {
@@ -249,44 +292,65 @@
     .skill-item:nth-child(odd) { padding-right: 24px; }
     .skill-item:nth-child(even) { padding-left: 24px; border-left: 1px solid var(--line); }
 
-    .skill-name {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--ink);
-    }
+    .skill-name { color: var(--ink); }
 
     .skill-detail {
-      font-size: 14px;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    /* RECOGNITION */
+    .recognition-list {
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .recognition-list li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 40px;
+      align-items: baseline;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .recognition-list .what {
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    .recognition-list .what span {
       font-weight: 300;
       color: var(--muted);
     }
 
+    .recognition-list .where {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
     /* PROJECTS */
-    #projects .projects-grid {
+    .projects-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0;
+      border-top: 1px solid var(--line);
     }
 
     .project-item {
-      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      padding: 40px 32px 40px 0;
       border-bottom: 1px solid var(--line);
       border-right: 1px solid var(--line);
     }
 
-    .project-item:nth-child(3n) { border-right: none; padding-right: 0; }
-
-    .project-item:nth-child(n+4) { border-bottom: none; }
-
-    .project-num {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      margin-bottom: 20px;
-    }
+    .project-item:nth-child(3n+2) { padding-left: 32px; }
+    .project-item:nth-child(3n) { border-right: none; padding-left: 32px; }
 
     .project-title {
       font-size: 26px;
@@ -296,12 +360,20 @@
       line-height: 1.2;
     }
 
+    .project-meta {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--muted);
+      margin: -6px 0 12px;
+    }
+
     .project-desc {
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 300;
       line-height: 1.65;
       color: var(--muted);
       margin-bottom: 20px;
+      max-width: 42ch;
     }
 
     .project-tags {
@@ -312,19 +384,32 @@
 
     .tag {
       font-family: 'DM Mono', monospace;
-      font-size: 9px;
+      font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
       border: 1px solid var(--line);
-      padding: 3px 8px;
+      padding: 4px 8px;
       border-radius: 2px;
+    }
+
+    .project-figure {
+      margin-top: auto;
+      padding-top: 28px;
+    }
+
+    .project-figure img {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      object-position: center 58%;
+      filter: grayscale(20%) contrast(1.05);
     }
 
     /* CONTACT */
     #contact {
       text-align: center;
-      padding: 120px 48px;
+      padding: 120px var(--gutter);
     }
 
     #contact .big-text {
@@ -339,10 +424,6 @@
 
     .contact-link {
       display: inline-block;
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
       text-decoration: none;
       color: var(--ink);
       border: 1px solid var(--ink);
@@ -358,18 +439,13 @@
     /* FOOTER */
     footer {
       border-top: 1px solid var(--line);
-      padding: 28px 48px;
+      padding: 28px var(--gutter);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    footer span {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 0.12em;
-    }
+    footer span { color: var(--muted); }
 
     /* ANIMATIONS */
     @keyframes fadeUp {
@@ -382,49 +458,66 @@
       to   { opacity: 1; }
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .hero-left, .hero-right { animation: none; opacity: 1; }
+      section { opacity: 1; transform: none; transition: none; }
+    }
+
     /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .project-item:nth-child(3n+2), .project-item:nth-child(3n) { padding-left: 0; }
+      .project-item:nth-child(odd) { border-right: 1px solid var(--line); padding-left: 0; }
+      .project-item:nth-child(even) { border-right: none; padding-left: 32px; }
+    }
+
     @media (max-width: 768px) {
-      nav { padding: 24px; }
-      nav ul { display: none; }
+      :root { --gutter: 24px; }
+      nav { padding: 20px var(--gutter); }
+      nav ul { gap: 18px; }
       .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 100px 24px 60px; }
-      .hero-right { height: 55vw; }
+      .hero-left { padding: 100px var(--gutter) 60px; }
+      .hero-right img { aspect-ratio: 4 / 3; object-position: center 30%; }
       .hero-right::after { background: linear-gradient(to bottom, var(--bg) 0%, transparent 20%); }
-      section { padding: 64px 24px; }
+      .hero-meta .place { width: 100%; border-right: none; padding-right: 0; }
+      section { padding: 64px var(--gutter); }
       #about { grid-template-columns: 1fr; gap: 40px; }
-      #projects .projects-grid { grid-template-columns: 1fr; }
-      .project-item { border-right: none !important; padding-right: 0 !important; }
+      .about-figure { max-width: none; }
+      .recognition-list li { grid-template-columns: 1fr; }
+      .recognition-list .where { white-space: normal; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-item, .project-item:nth-child(odd), .project-item:nth-child(even) { border-right: none; padding: 28px 0 32px; }
       .project-item:last-child { border-bottom: none; }
-      .divider { margin: 0 24px; }
-      footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <span class="logo">Timotej Cvikl</span>
+    <span class="logo mono">Timotej Cvikl</span>
     <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Work</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a class="mono" href="#about">About</a></li>
+      <li><a class="mono" href="#work">Work</a></li>
+      <li><a class="mono" href="#contact">Contact</a></li>
     </ul>
   </nav>
 
   <!-- HERO -->
   <section class="hero" style="opacity:1;transform:none;padding:0;">
     <div class="hero-left">
-      <p class="hero-eyebrow">Ljubljana, Slovenia</p>
       <h1 class="hero-name">Timotej<br><em>Cvikl</em></h1>
-      <p class="hero-desc">CS student at FRI. Building things at the intersection of machine learning, markets, and ideas.</p>
-      <div class="hero-links">
+      <p class="hero-desc"><strong>Co-founder of Legis Labs.</strong> Building AI that people can trust with decisions that matter.</p>
+      <div class="hero-meta mono">
+        <span class="place">Cambridge, United Kingdom</span>
         <a href="mailto:timotej.cvikl@gmail.com">Email</a>
-        <a href="https://www.linkedin.com/in/timotej-cvikl-89514518b/" target="_blank">LinkedIn</a>
-        <a href="https://github.com/cvikl" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/timotej-cvikl/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/cvikl" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
     <div class="hero-right">
-      <img src="profile.jpg" alt="Timotej Cvikl" />
+      <img src="assets/img/profile.jpg" alt="Timotej Cvikl" width="1059" height="1100" fetchpriority="high" />
     </div>
   </section>
 
@@ -433,111 +526,147 @@
   <!-- ABOUT -->
   <section id="about">
     <div>
-      <p class="section-label">About</p>
-      <h2 class="about-heading">Builder,<br><em>researcher,</em><br>founder-in-progress.</h2>
+      <h2 class="about-heading">Builder,<br><em>researcher,</em><br>founder.</h2>
+      <figure class="about-figure">
+        <img src="assets/img/accelerate-cambridge.jpg" alt="Timotej Cvikl with the Legis Labs team at Cambridge Judge Business School" width="480" height="640" loading="lazy" />
+        <figcaption>Accelerate Cambridge, Cohort 40. Cambridge Judge Business School, 2026.</figcaption>
+      </figure>
     </div>
     <div class="about-body">
-      <p>I study Computer Science (AI track) at the Faculty of Computer and Information Science in Ljubljana, with exchange experience at the University of Oklahoma (GPA 4.0, Fall 2025). I also lead the startup and entrepreneurship initiative at FRI Founders, working to connect FRI's technical talent with Slovenia's startup ecosystem.</p>
-      <p>I'm the co-owner of Marcelino d.o.o., where I've designed and built end-to-end CRM and SaaS systems for 10+ industrial clients and delivered AI-powered asset management and SEO automation for automotive dealers. My work spans machine learning research, full-stack development, geospatial analysis, and quantitative finance. I'm drawn to problems where rigorous engineering meets real-world complexity.</p>
+      <p>I am the co-founder of <strong>Legis Labs</strong>. We build a verification engine for regulated work. It checks AI output against its sources, line by line, so that people can trust what the model produced. We are in Accelerate Cambridge, and the engine is live on UK immigration case preparation.</p>
+      <p>Before that I co-founded <strong>Marcelino Technologies</strong> in Celje and founded <strong>FRI Founders</strong>, the startup community at the Faculty of Computer and Information Science (FRI) in Ljubljana. I now advise both.</p>
+      <p>I study Computer Science on the AI track at the University of Ljubljana, with an exchange semester at the University of Oklahoma.</p>
       <p>Outside of code, I take the gym seriously because consistency there carries over everywhere else.</p>
+      <p class="about-note">Marcelino Technologies: co-founded 2023, AI and SaaS for 10+ industrial clients (EasyTask, iDrive). Now advisor and shareholder.</p>
       <div class="skills-grid">
         <div class="skill-item">
-          <span class="skill-name">ML & AI</span>
-          <span class="skill-detail">LLMs, LoRA fine-tuning, NLP</span>
+          <span class="skill-name mono">AI Verification</span>
+          <span class="skill-detail">LLMs, dependency graphs, source citation</span>
         </div>
         <div class="skill-item">
-          <span class="skill-name">Engineering</span>
-          <span class="skill-detail">Python, Full-stack, APIs, SaaS</span>
+          <span class="skill-name mono">Engineering</span>
+          <span class="skill-detail">Python, full-stack, APIs, SaaS</span>
         </div>
         <div class="skill-item">
-          <span class="skill-name">Geospatial</span>
-          <span class="skill-detail">GIS, Remote Sensing, GEE</span>
+          <span class="skill-name mono">Product</span>
+          <span class="skill-detail">0 to 1, regulated domains</span>
         </div>
         <div class="skill-item">
-          <span class="skill-name">Finance</span>
-          <span class="skill-detail">Quant research, markets, NLP</span>
+          <span class="skill-name mono">Research</span>
+          <span class="skill-detail">NLP, computer vision</span>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="divider"></div>
+  <!-- RECOGNITION -->
+  <section id="recognition">
+    <h2 class="section-title">Recognition</h2>
+    <ul class="recognition-list">
+      <li>
+        <span class="what">Accelerate Cambridge, Cohort 40</span>
+        <span class="where">Cambridge Judge Business School, 2026</span>
+      </li>
+      <li>
+        <span class="what">Winner, Luminance Challenge <span>at Hack the Law</span></span>
+        <span class="where">University of Cambridge, 2026</span>
+      </li>
+      <li>
+        <span class="what">Vouch Finance Prize <span>at the CDIR Global Agentic Regulator Competition</span></span>
+        <span class="where">Cambridge, 2026</span>
+      </li>
+      <li>
+        <span class="what">Popular Vote winner <span>at the Adeline Health x AI Hackathon</span></span>
+        <span class="where">Google HQ London, 2026</span>
+      </li>
+      <li>
+        <span class="what">1st place, AI x Law Hackathon</span>
+        <span class="where">Ljubljana, 2026</span>
+      </li>
+      <li>
+        <span class="what">Finalist, Falling Walls Lab <span>South West Austria</span></span>
+        <span class="where">Villach, 2026</span>
+      </li>
+      <li>
+        <span class="what">Paper accepted <span>at ERK 2026</span></span>
+        <span class="where">Portorož, 2026</span>
+      </li>
+    </ul>
+  </section>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <p class="section-label">Selected Work</p>
+  <!-- SELECTED WORK -->
+  <section id="work">
+    <h2 class="section-title">Selected work</h2>
     <div class="projects-grid">
 
-      <div class="project-item">
-        <p class="project-num">01</p>
-        <h3 class="project-title">Financial NLP Research</h3>
-        <p class="project-desc">Fine-tuned ModernFinBERT with LoRA on 15.5M rows and 2.2M article–ticker pairs to test whether news sentiment predicts short-term equity returns. EMH-consistent findings.</p>
+      <article class="project-item">
+        <h3 class="project-title">Legis Labs</h3>
+        <p class="project-meta">Accelerate Cambridge, 2026</p>
+        <p class="project-desc">Live on UK immigration case preparation, with three signed law-firm LOIs. Every claim in a draft is traced to its source over a dependency graph, so a caseworker sees what was checked and what was not.</p>
         <div class="project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">LoRA</span>
-          <span class="tag">H100</span>
-          <span class="tag">Finance</span>
+          <span class="tag">Verification</span>
+          <span class="tag">LLMs</span>
+          <span class="tag">Legal</span>
         </div>
-      </div>
+      </article>
 
-      <div class="project-item">
-        <p class="project-num">02</p>
-        <h3 class="project-title">iDrive</h3>
-        <p class="project-desc">A digital car marketplace making vehicle buying and selling simpler, faster, and more transparent. Connects dealers and customers in one place with tools for smarter listing management, all built around trust, visibility, and easier car sales.</p>
+      <article class="project-item">
+        <h3 class="project-title">Agent Passport</h3>
+        <p class="project-meta">CDIR Global Agentic Regulator Competition, 2026</p>
+        <p class="project-desc">A Know-Your-Agent verification protocol for autonomous agents in financial services. Finalist, and winner of the Vouch Finance Prize.</p>
         <div class="project-tags">
-          <span class="tag">Full-stack</span>
-          <span class="tag">SaaS</span>
-          <span class="tag">Product</span>
+          <span class="tag">Agents</span>
+          <span class="tag">Financial services</span>
+          <span class="tag">Protocol</span>
         </div>
-      </div>
+      </article>
 
-      <div class="project-item">
-        <p class="project-num">03</p>
-        <h3 class="project-title">AI x Law Hackathon</h3>
-        <p class="project-desc">1st place. Built an LLM-based system for automated legal due diligence with full reports generated in seconds. Delivered a working MVP in 24 hours in partnership with law firm Jadek & Pensa. Selected to present at the University of Cambridge.</p>
+      <article class="project-item">
+        <h3 class="project-title">Clinical audit harness</h3>
+        <p class="project-meta">Adeline Health x AI Hackathon, Google HQ London, 2026</p>
+        <p class="project-desc">A MedGemma-based audit harness for clinical documents, built in 24 hours with Alexandra Tran and Davod Shah. Popular Vote winner.</p>
+        <div class="project-tags">
+          <span class="tag">MedGemma</span>
+          <span class="tag">Healthcare</span>
+          <span class="tag">Audit</span>
+        </div>
+      </article>
+
+      <article class="project-item">
+        <h3 class="project-title">Certum</h3>
+        <p class="project-meta">Hack the Law, University of Cambridge, 2026</p>
+        <p class="project-desc">Dependency-graph review of AI-drafted legal documents. Winner of the Luminance Challenge.</p>
+        <div class="project-tags">
+          <span class="tag">Legal tech</span>
+          <span class="tag">Dependency graphs</span>
+          <span class="tag">LLMs</span>
+        </div>
+      </article>
+
+      <article class="project-item">
+        <h3 class="project-title">Prima Facie</h3>
+        <p class="project-meta">AI x Law Hackathon, Ljubljana, 2026</p>
+        <p class="project-desc">An LLM pipeline for legal intake and due diligence, built with law firm Jadek &amp; Pensa in 24 hours. 1st place.</p>
         <div class="project-tags">
           <span class="tag">LLMs</span>
-          <span class="tag">Legal Tech</span>
-          <span class="tag">Hackathon</span>
-          <span class="tag">1st Place</span>
+          <span class="tag">Legal intake</span>
+          <span class="tag">Due diligence</span>
         </div>
-      </div>
+      </article>
 
-      <div class="project-item">
-        <p class="project-num">04</p>
+      <article class="project-item">
         <h3 class="project-title">FRI Founders</h3>
-        <p class="project-desc">Founding and leading a structured startup & entrepreneurship event series at FRI, bridging Slovenia's technical talent pipeline with its startup ecosystem.</p>
+        <p class="project-meta">University of Ljubljana, 2026</p>
+        <p class="project-desc">The startup community at FRI, which I founded and grew to 120+ members. Runs the Founders Talk series and a podcast with Slovenian founders and investors.</p>
         <div class="project-tags">
           <span class="tag">Community</span>
           <span class="tag">Events</span>
-          <span class="tag">FRI</span>
+          <span class="tag">Podcast</span>
         </div>
-      </div>
-
-      <div class="project-item">
-        <p class="project-num">05</p>
-        <h3 class="project-title">Easytask</h3>
-        <p class="project-desc">Full-stack production system for managing machine faults and periodic maintenance tasks in manufacturing. Role-based access, fault lifecycle tracking, scheduling, and email notifications, deployed on a hardened Linux server with Nginx, SSL, and Fail2ban.</p>
-        <div class="project-tags">
-          <span class="tag">Java</span>
-          <span class="tag">Spring Boot</span>
-          <span class="tag">MySQL</span>
-          <span class="tag">Nginx</span>
-        </div>
-      </div>
-
-      <div class="project-item">
-        <p class="project-num">06</p>
-        <h3 class="project-title">Sociability & Creativity</h3>
-        <p class="project-desc">I'm very sociable and enjoy working with people. I easily connect, listen, and understand different perspectives. I also enjoy creating, especially videos and content, as a way to express ideas in a more engaging and visual way.</p>
-        <div class="project-tags">
-          <span class="tag">Sociability</span>
-          <span class="tag">Communication</span>
-          <span class="tag">Creativity</span>
-          <span class="tag">Video</span>
-          <span class="tag">People</span>
-        </div>
-      </div>
+        <figure class="project-figure">
+          <img src="assets/img/fri-founders.jpg" alt="The FRI Founders team on a walkway inside the Faculty of Computer and Information Science in Ljubljana" width="480" height="640" loading="lazy" />
+        </figure>
+      </article>
 
     </div>
   </section>
@@ -545,19 +674,19 @@
   <div class="divider"></div>
 
   <!-- CONTACT -->
-  <section id="contact" style="opacity:1;transform:none;">
+  <section id="contact">
     <p class="big-text">Let's build<br><em>something.</em></p>
-    <a class="contact-link" href="mailto:timotej.cvikl@gmail.com">Get in touch</a>
+    <a class="contact-link mono" href="mailto:timotej.cvikl@gmail.com">Get in touch</a>
   </section>
 
   <footer>
-    <span>Timotej Cvikl &mdash; Ljubljana</span>
-    <span>&copy; 2026</span>
+    <span class="mono">Timotej Cvikl — Cambridge · Ljubljana</span>
+    <span class="mono">&copy; 2026</span>
   </footer>
 
   <script>
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.1 });
     document.querySelectorAll('section:not(.hero)').forEach(s => observer.observe(s));
   </script>
